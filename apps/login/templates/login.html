@@ -1,0 +1,150 @@
+{% extends 'body.html' %}
+
+{% block body %}
+
+    {#    #}
+    {#    <input type="password" name="password" class="form-control is-invalid" #}
+    {#           id="exampleInputPassword1" placeholder="Clave" aria-describedby="exampleInputPassword1-error" aria-invalid="true">#}
+    {#    #}
+
+    {% from "_macro.html" import form_error, error_m %}
+    <style>
+        .login-page {
+            background-image: url({{ url_for('static', filename='img/car.jpg') }})
+        }
+    </style>
+
+    <body class="login-page" data-q-sc-loaded="true" style="min-height: 496.802px;">
+
+    <div class="login-box">
+
+        {% block alerta_sistema %}
+            {% if get_flashed_messages() %}
+                {% with messages = get_flashed_messages() %}
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                        </button>
+                        <h5><i class="icon fas fa-info"></i> Alerta!</h5>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </div>
+                {% endwith %}
+            {% endif %}
+        {% endblock %}
+
+        <div class="card">
+
+            {% if get_flashed_messages() %}
+                {% with messages = get_flashed_messages() %}
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                        </button>
+                        <h5><i class="icon fas fa-info"></i> Alerta!</h5>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </div>
+                {% endwith %}
+            {% endif %}
+
+            {#            {% if error %}#}
+            {#                <div style="background-color: red">#}
+            {#                    <p style="accent-color: #0c5460"> {{ error }}</p>#}
+            {#                </div>#}
+            {#            {% endif %}#}
+
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Iniciar sesión</p>
+
+                <form action="" method='POST' novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="input-group mb-3">
+                        {{ form.username }}
+                        {#                        <input type="email" class="form-control" placeholder="Email">#}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user-alt"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        {#                        <input type="password" class="form-control" placeholder="Password">#}
+                        {{ form.password }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                            {{ form_error(form.password) }}
+                        </div>
+
+
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="col-6">
+                            {{ form.rol }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form.remember_me }}
+                            {#                            <div class="icheck-primary">#}
+                            {#                                <input type="checkbox" id="remember" value="login">#}
+                            {{ form.remember_me.label }}
+                            {#                                <label for="remember">#}
+                            {#                                    Remember Me#}
+                            {#                                </label>#}
+                            {#                            </div>#}
+                        </div>
+
+                        <br>
+
+
+                        <br>
+                        <div class="col-6">
+                            {{ form.guardar }}
+                        </div>
+
+                    </div>
+                </form>
+
+                {#                <p class="mb-1">#}
+                {#                    <a href="forgot-password.html">I forgot my password</a>#}
+                {#                </p>#}
+
+                {#                <p class="mb-0">#}
+                {#                    <a href="{{ url_for('users.registros') }}" class="text-center">Registrarme</a>#}
+                {#                </p>#}
+            </div>
+
+        </div>
+    </div>
+    </body>
+
+{% endblock %}
+
+
+
+{##}
+{#{% if error %}#}
+{#    <div style="background-color: red">#}
+{#        <p style="accent-color: #0c5460"> {{ error }}</p>#}
+{#    </div>#}
+{#{% endif %}#}
+{##}
+
+{#{% from "_macro.html" import form_error %}#}
+{##}
+{#<form action="" method = 'POST' novalidate>#}
+{# {{ form.hidden_tag() }}#}
+{#{{ form_error(form.username) }}#}
+{#{{ form_error(form.password) }}#}
+{#{{ form_error(form.remember_me) }}#}
+{#    {{ form.guardar }}#}
+{#</form>#}
+
+

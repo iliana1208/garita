@@ -1,0 +1,52 @@
+{% extends 'home.html' %}
+
+{% block body %}
+    <body class="sidebar-mini sidebar-clased sidebar-collapse" data-action="false">
+    <div class="wrapper">
+        <!-- Header -->
+        {% include 'nav/header.html' %}
+        <!-- Sidebar -->
+        {% include 'nav/sidebar.html' %}
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">  <small> {{ title }}</small></h1>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container">
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+{#        {% include "footer.html" %}#}
+    </div>
+
+    <!--Block javascript -->
+{#    {% block javascript %}#}
+{#        <script type="application/javascript">#}
+{#        $(function () {#}
+{#             $('#data').DataTable({#}
+{#                 responsive: True,#}
+{#                 autoWidth: false#}
+{#             });#}
+{#        });#}
+{#        </script>#}
+{#    {% endblock %}#}
+
+     <script>
+
+    </script>
+
+    </body>
+
+{% endblock %}

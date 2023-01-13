@@ -1,0 +1,31 @@
+{% macro form_error(field) %}
+    {% for error in field.errors %}
+        <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+{% endmacro %}
+
+{% macro form_valid(field) %}
+    {{ field.label }}
+    {{ field }}
+    {% for error in field.errors %}
+        <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+{% endmacro %}
+
+
+{% macro error_m() %}
+{#    {% if error %}#}
+{#        <div class="error invalid-feedback" style="vertical-align: inherit">#}
+{#        <p>{{ error }}</p>#}
+{#        </div>#}
+{#    {% endif %}#}
+
+    {% if error %}
+        <div style="background-color: red">
+            <p style="accent-color: #0c5460"> {{ error }}</p>
+        </div>
+    {% endif %}
+
+
+
+{% endmacro %}

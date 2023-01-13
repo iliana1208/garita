@@ -1,0 +1,120 @@
+{% extends 'body.html' %}
+
+{% block head %}
+    <!-- Datatables -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' ) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/css/responsive.bootstrap4.min.css' ) }}">
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/js/jquery.dataTables.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/js/dataTables.bootstrap4.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/js/dataTables.responsive.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/js/responsive.bootstrap4.min.js' ) }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-11">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list-alt"></i>
+                        Histórico de visitas
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    <table class="table" id="data_l">
+                        <thead>
+                        {% block columns %}
+                            <tr>
+                                <th scope="col" style="width: 15%;">Nombre</th>
+                                <th scope="col" style="width: 15%;">Cedula</th>
+                                <th scope="col" style="width: 15%;">Placa</th>
+                                <th scope="col" style="width: 15%;">Fecha de ingreso</th>
+                                <th scope="col" style="width: 15%;">Fecha de salida</th>
+                                <th scope="col" style="width: 15%;">Tiempo de visita</th>
+                            </tr>
+                        {% endblock %}
+                        </thead>
+                        {% block rows %}
+{#                            {% for i in post_pagination.items %}#}
+{#                                {% if i.tiempo != None %}#}
+{#                                <tr>#}
+{#                                    <td>{{ i.nombre }}</td>#}
+{#                                    <td>{{ i.cedula }}</td>#}
+{#                                    <td>{{ i.placa }}</td>#}
+{#                                    <td>{{ i.fecha_ingreso }}</td>#}
+{#                                    <td>{{ i.fecha_salida }}</td>#}
+{#                                    <td>{{ i.tiempo }}</td>#}
+{##}
+{#                                </tr>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+                            <tr>
+                        {% endblock %}
+
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+{#                <div class="pagination">#}
+{#                    {% for page in post_pagination.iter_pages() %}#}
+{#                        {% if page %}#}
+{#                            {% if page != post_pagination.page %}#}
+{#                                <a href="{{ url_for('ingresos.listado',page=page) }}">#}
+{#                                 {{ page }} &nbsp </a>#}
+{#                                {% else %}#}
+{#                                    <strong>{{ page }} &nbsp </strong>#}
+{#                                {% endif %}#}
+{#                            {% else %}#}
+{#                                <span class="ellipsis"></span>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                </div>#}
+
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
+
+
+
+        let tbl;
+
+        function get_tbl() {
+            tbl = $('#data_l').DataTable({
+                    responsive: false,
+                    autoWidth: false,
+                    destroy: true,
+                    deferRender: true,
+                    scrollX: true,
+                    ajax: {
+                        url: window.location.pathname,
+                        type: 'POST',
+                        data: {
+                            'action': 'searchdata'
+                        },
+                        dataSrc: "",
+                        headers: {'X-CSRFToken': csrftoken}
+                    },
+                    columns: [
+                        {"data": "nombre"},
+                        {"data": "cedula"},
+                        {"data": "placa"},
+                        {"data": "fecha_ingreso"},
+                        {"data": "fecha_salida"},
+                        {"data": "tiempo"},
+                    ],
+
+                }
+            )
+        }
+
+        get_tbl()
+
+
+    </script>
+{% endblock %}

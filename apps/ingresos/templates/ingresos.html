@@ -1,0 +1,83 @@
+{% extends 'body.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list-alt"></i>
+                        Registro de entradas
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    {% from '_macro.html' import form_error %}
+                    <form action="" method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <div class="form-group">
+                            {{ form.nombre.label }}
+                            <div class="input-group sm">
+                                {{ form.nombre }}
+                            </div>
+                            {% if form.nombre.errors %}
+                                {% for error in form.nombre.errors %}
+                                    <span class="text-danger small">{{ error }}</span>
+                                {% endfor %}
+                                {#                                {% else %}#}
+                                {#                                    <span class="text-success small">Correcto</span>#}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.cedula.label }}
+                            <div class="input-group sm">
+                                {{ form.cedula }}
+                            </div>
+                            {% if form.cedula.errors %}
+                                {% for error in form.cedula.errors %}
+                                    <span class="text-danger small">{{ error }}</span>
+                                {% endfor %}
+                                {#                                {% else %}#}
+                                {#                                    <span class="text-success small">Correcto</span>#}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.placa.label }}
+                            <div class=" input-group sm">
+                                {{ form.placa }}
+                            </div>
+                            {% if form.placa.errors %}
+                                {% for error in form.placa.errors %}
+                                    <span class="text-danger small">{{ error }}</span>
+                                {% endfor %}
+                                {#                                {% else %}#}
+                                {#                                    <span class="text-success small">Correcto</span>#}
+                            {% endif %}
+                        </div>
+
+                        {{ form.guardar }}
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+
+
+        let nombre = document.getElementById('nombre')
+        nombre.addEventListener('keyup', function () {
+            nombre.style.borderColor = 'green'
+        })
+
+
+    </script>
+
+{% endblock %}

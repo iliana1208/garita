@@ -1,0 +1,178 @@
+{% extends 'body.html' %}
+
+{% block head %}
+    <!-- Datatables -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' ) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/css/responsive.bootstrap4.min.css' ) }}">
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/js/jquery.dataTables.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/js/dataTables.bootstrap4.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/js/dataTables.responsive.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/js/responsive.bootstrap4.min.js' ) }}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list-alt"></i>
+                        Registro de salidas
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="data">
+                        <thead>
+                        {% block columns %}
+                            <tr>
+                                <th scope="col" style="width: 15%;">Nombre</th>
+                                <th scope="col" style="width: 15%;">Cedula</th>
+                                <th scope="col" style="width: 15%;">Placa</th>
+                                <th scope="col" style="width: 15%;">Fecha de ingreso</th>
+                                <th scope="col" style="width: 15%;">Opciones</th>
+                            </tr>
+                        {% endblock %}
+                        </thead>
+                        {% block rows %}
+                            {#                            {% for i in post_pagination.items %}#}
+                            {#                                {% if i.tiempo == None %}#}
+                            {#                                <tr>#}
+                            {#                                    <td>{{ i.nombre }}</td>#}
+                            {#                                    <td>{{ i.cedula }}</td>#}
+                            {#                                    <td>{{ i.placa }}</td>#}
+                            {#                                    <td>{{ i.fecha_ingreso }}</td>#}
+                            {#                                    <td><button id={{ i.id }} ><i></i></button></td>#}
+                            {#                                    <td>#}
+                            {#                                        <button id={{ i.id }} class="btn-primary btnregistro"><i class="fas fa-door-open"></i></button></td>#}
+                            {##}
+                            {#                                </tr>#}
+                            {#                                {% endif %}#}
+                            {#                            {% endfor %}#}
+                            {#                            <tr>#}
+                        {% endblock %}
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+
+                    {#                <div class="pagination">#}
+                    {#                    {% for page in post_pagination.iter_pages() %}#}
+                    {#                        {% if page %}#}
+                    {#                            {% if page != post_pagination.page %}#}
+                    {#                                <a href="{{ url_for('ingresos.salidas',page=page) }}">#}
+                    {#                                 {{ page }} &nbsp </a>#}
+                    {#                                {% else %}#}
+                    {#                                    <strong>{{ page }} &nbsp </strong>#}
+                    {#                                {% endif %}#}
+                    {#                            {% else %}#}
+                    {#                                <span class="ellipsis"></span>#}
+                    {#                        {% endif %}#}
+                    {#                    {% endfor %}#}
+                    {#                </div>#}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        {#let btn_registro = document.getElementById('btnregistro'.id)#}
+        let btnregistro = document.querySelectorAll(".btnregistro")
+        {#btnregistro.forEach(element => console.log(element));#}
+
+        btnregistro.forEach(function (registro) {
+                registro.addEventListener('click', function () {
+
+                    id_registro = registro.id;
+                    console.log(registro)
+                    enviarData(id_registro)
+                })
+
+            }
+        );
+
+        function enviarData(id_registro) {
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    action: 'update',
+                    id: id_registro
+
+                }
+            }).done(function (data) {
+
+                if (!data.hasOwnProperty('error')) {
+                    console.log('redirect', data.redirect)
+                    if (data.hasOwnProperty('redirect')) {
+                        location.href = data.redirect
+                    }
+                }
+                console.log("data", data)
+
+            }).fail(function (error) {
+                console.log("Error")
+            })
+        }
+
+        let tbl;
+
+        function get_tbl() {
+            tbl = $('#data').DataTable({
+                    responsive: false,
+                    autoWidth: false,
+                    destroy: true,
+                    deferRender: true,
+                    scrollX: true,
+                    ajax: {
+                        url: window.location.pathname,
+                        type: 'POST',
+                        data: {
+                            'action': 'searchdata'
+                        },
+                        dataSrc: "",
+                        headers: {'X-CSRFToken': csrftoken}
+                    },
+                    columns: [
+                        {"data": "nombre"},
+                        {"data": "cedula"},
+                        {"data": "placa"},
+                        {"data": "fecha_ingreso"},
+                        {"data": "opciones"}
+                    ],
+                    columnDefs: [
+                        {
+                            targets: [-1],
+                            class: 'text-center',
+                            orderable: false,
+
+                            render: function (data, type, row) {
+                                {#<button id={{ i.id }} class="btn-primary btnregistro"><i class="fas fa-door-open"></i></button></td>#}
+                                var button = '<button type="button" class="btn-primary btn-xs btnregistro"><i class="fas fa-door-open"></i></button> ';
+                                return button;
+                            }
+                        },
+                    ]
+
+                }
+            )
+        }
+
+        get_tbl()
+
+        $("#data tbody").on('click', '.btnregistro', function (e) {
+            e.preventDefault()
+            var tr = tbl.cell($(this).closest('td, li')).index();
+            var data = tbl.row(tr.row).data();
+            let id = data.id
+            enviarData(id)
+        })
+
+    </script>
+
+{% endblock %}
