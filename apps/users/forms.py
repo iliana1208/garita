@@ -10,13 +10,20 @@ class RegistrosForm(FlaskForm):
 
     username = wtforms.StringField(label="Username", validators=[length(max=20, min=4), DataRequired()],
                                    render_kw={'placeholder': 'Ingrese su username', 'class': 'form-control'})
-    rol = wtforms.SelectField(choices=[(1,'Administrador'), (2,'Superuser'),(3,'Gestor')], render_kw={'class': 'btn btn-primary btn-block'})
-
-    establecimiento = wtforms.StringField(label="Establecimiento", render_kw={'placeholder': 'Establecimiento', 'class':'form-control'})
-
+    rol = wtforms.SelectField(choices=[(1, 'Administrador'), (2, 'Gestor'), (3, 'Superuser'),],
+                              render_kw={'class': 'btn btn-primary btn-block'})
+    establecimiento = wtforms.SelectField(choices=[(0, "-----")], coerce=int,
+                                          render_kw={'class': 'btn btn-primary btn-block'})
     password = wtforms.PasswordField(label="Password", validators=[length(max=30, min=4), DataRequired()],
                                      render_kw={'placeholder': 'Ingrese su contraseña', 'class': 'form-control'})
     email = wtforms.EmailField(label="Correo electronico",
                                validators=[email(message="Correo no cumple con el formato requerido")],
                                render_kw={'placeholder': 'Ingrese su correo', 'class': 'form-control'})
     register = wtforms.SubmitField('Registrarse', render_kw={'class': 'btn btn-primary btn-block'})
+
+    def __init__(self, *args, **kwargs):
+        super(RegistrosForm, self).__init__(*args, **kwargs)
+        pass
+
+    def change_choices_estbl(self, lista):
+        self.establecimiento.choices = lista

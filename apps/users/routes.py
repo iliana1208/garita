@@ -1,17 +1,20 @@
 from flask import request, redirect, url_for, render_template, flash
 from flask_login import current_user
 
+from apps.establecimiento.models import Establecimiento
 from apps.users import users
 from apps.users.forms import RegistrosForm
 from apps.users.models import User
 from config.db import db
 
-@users.route('/registros', methods = ['GET', 'POST'])
+@users.route('/registros', methods=['GET', 'POST'])
 def registros():
     if current_user.is_authenticated:
         return redirect(url_for("ingresos.listado"))
     method = request.method
     form = RegistrosForm()
+    lista = [(x.id, x.nombre) for x in Establecimiento.query.all()]
+    form.change_choices_estbl(lista)
     error = ""
 
     if method == 'POST':
@@ -29,8 +32,9 @@ def registros():
                 if not user:
                     try:
 
-                        user = User(username=username, password=password, first_name=first_name, last_name=last_name, is_active=is_active,
-                                    rol=rol, establecimiento=establecimiento,  correo=email)
+                        user = User(username=username, password=password, first_name=first_name, last_name=last_name,
+                                    is_active=is_active,
+                                    rol=rol, establecimiento=establecimiento, correo=email)
 
                         user.password = User.set_password(password)
                         db.session.add(user)
@@ -46,6 +50,5 @@ def registros():
                 print("errores", form.errors)
         except Exception as e:
             print("Error", str(e))
-
 
     return render_template('registros.html', form=form, title='Registros de nuevos usuarios', error=error)

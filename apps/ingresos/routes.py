@@ -41,8 +41,6 @@ def listado():
         datos = request.form
         action = datos.get('action')
         id_car = datos.get('id')
-        print(id_car)
-        print('en post')
 
         if action == 'searchdata':
             print('search')
@@ -55,8 +53,8 @@ def listado():
                         fecha_ingreso = items.fecha_ingreso.strftime("%d-%m-%Y %H:%M:%S")
                         fecha_salida = items.fecha_salida.strftime("%d-%m-%Y %H:%M:%S")
                         tiempo = escala_time(items.tiempo)
-                        user_modified=current_user.username
-
+                        print(tiempo)
+                        #user_modified = current_user.username
                         list.append(
                             {'id': items.id, 'nombre': items.nombre, 'cedula': items.cedula, 'placa': items.placa,
                              'fecha_ingreso': fecha_ingreso,'fecha_salida': fecha_salida, 'tiempo': tiempo, 'user_creation':items.user_creation, 'user_modified':user_modified})

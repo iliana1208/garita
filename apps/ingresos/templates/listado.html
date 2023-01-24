@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table class="table" id="data_l">
+                    <table class="table" id="data_list">
                         <thead>
                         {% block columns %}
                             <tr>
@@ -85,7 +85,7 @@
         let tbl;
 
         function get_tbl() {
-            tbl = $('#data_l').DataTable({
+            tbl = $('#data_list').DataTable({
                     responsive: false,
                     autoWidth: false,
                     destroy: true,

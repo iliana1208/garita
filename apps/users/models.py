@@ -10,13 +10,13 @@ class User(BaseModelMixin, db.Model):
     # is_admin = db.Column(db.Boolean, default=False)
     # is_superuser = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=True)
-    rol = db.Column(db.Integer)
+    rol = db.Column(db.Integer, nullable= True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
     first_name = db.Column(db.String(100), nullable=True)
     last_name = db.Column(db.String(100), nullable=True)
     correo = db.Column(db.String(200), nullable=True, default='sininfo@gmail.com')
-    establecimiento_id = db.Column(db.Integer, db.ForeignKey('establecimiento.id'))
+    establecimiento_id = db.Column(db.Integer, db.ForeignKey('establecimiento.id'), nullable=True)
     # ingresos_user_creation = db.relationship('Ingreso', backref='user_creation', foreign_keys=['User.id'])
     # ingresos_user_modified = db.relationship('Ingreso', backref='user_modified', foreign_keys=['User.id'])
     # rol = db.Column(db.Integer, db.ForeignKey('rol.codigo'))
@@ -28,7 +28,7 @@ class User(BaseModelMixin, db.Model):
         self.first_name = first_name
         self.last_name = last_name
         self.correo = correo
-        self.establecimiento_id=establecimiento
+        self.establecimiento_id = establecimiento
 
     @staticmethod
     def get_id(id):

@@ -1,8 +1,9 @@
 from sqlalchemy import null
 from config.db import db
 import datetime
+from base.contrib.models import BaseModelMixin, RelationShipAudit
 
-class Ingreso(db.Model):
+class Ingreso(BaseModelMixin, RelationShipAudit, db.Model):
     # __abstract__=True
     id = db.Column(db.Integer, primary_key=True)
     fecha_ingreso = db.Column(db.DateTime, default=datetime.datetime.now())
@@ -11,6 +12,7 @@ class Ingreso(db.Model):
     cedula = db.Column(db.String(10), nullable = False)
     fecha_salida= db.Column(db.DateTime, nullable= True)
     tiempo = db.Column(db.Integer, nullable= True)
+
     # user_creation = db.Column(db.Integer, db.ForeignKey('user.id'), nullable= True)
     # user_modified = db.Column(db.Integer, db.ForeignKey('user.id'), nullable= True)
 

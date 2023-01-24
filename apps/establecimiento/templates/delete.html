@@ -1,0 +1,60 @@
+<div class="modal-body">
+    {% from '_macro.html' import form_error %}
+    <form id="form-establecimiento" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.nombre.label }}
+            <div class="input-group sm">
+
+                {{ form.nombre }}
+            </div>
+            {% if form.nombre.errors %}
+                {% for error in form.nombre.errors %}
+                    <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.direccion.label }}
+            <div class=" input-group sm">
+
+                {{ form.direccion }}
+            </div>
+            {% if form.direccion.errors %}
+                {% for error in form.direccion.errors %}
+                    <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.telefono.label }}
+            <div class="input-group sm">
+                {{ form.telefono }}
+            </div>
+            {% if form.telefono.errors %}
+                {% for error in form.telefono.errors %}
+                    <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.observacion.label }}
+            <div class="input-group sm">
+                {{ form.observacion }}
+            </div>
+            {% if form.telefono.errors %}
+                {% for error in form.observacion.errors %}
+                    <span class="text-danger small">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {{ form.guardar }}
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+
+
+</div>

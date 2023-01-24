@@ -32,3 +32,5 @@ def load_user(id):
 
 if __name__ == '__main__':
     app.run()
+
+import base.cli.command

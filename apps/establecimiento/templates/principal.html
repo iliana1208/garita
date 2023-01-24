@@ -1,5 +1,4 @@
 {% extends 'body.html' %}
-
 {% block head %}
     <!-- Datatables -->
     <link rel="stylesheet"
@@ -14,13 +13,22 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-05">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-list-alt"></i>
                         Listar establecimientos
                     </h3>
+                </div>
+
+                <div class="jumbotron-fluid p-2">
+                    <h2>
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal"
+                                data-target="#mymodal" id="buttonestbl"> Agregar nuevo establecimiento
+                        </button>
+
+                    </h2>
                 </div>
                 <div class="card-body">
                     <table class="table" id="data_p">
@@ -31,6 +39,7 @@
                                 <th scope="col" style="width: 15%;">Direccion</th>
                                 <th scope="col" style="width: 15%;">Telefono</th>
                                 <th scope="col" style="width: 15%;">Observacion</th>
+                                <th scope="col" style="width: 15%;">Opciones</th>
                             </tr>
                         {% endblock %}
                         </thead>
@@ -46,23 +55,96 @@
             </div>
         </div>
 
-        <div class="col-md-5">
-            <div class="card">
-                <div class="card-header">
+        {#        <div class="col-md-5">#}
+        {#            <div class="card">#}
+        {#                <div class="card-header">#}
+        {#                    <h3 class="card-title">#}
+        {#                        <i class="fas fa-plus-circle"></i>#}
+        {#                        Agregar establecimiento#}
+        {#                    </h3>#}
+        {#                </div>#}
+        {##}
+        {#                <div class="card-body clearfix">#}
+        {##}
+        {#                    <div class="card-body">#}
+        {#                        {% from '_macro.html' import form_error %}#}
+        {#                        <form action="enviar_form" method="POST" novalidate>#}
+        {#                            {{ form.hidden_tag() }}#}
+        {##}
+        {#                            <div class="form-group">#}
+        {#                                {{ form.nombre.label }}#}
+        {#                                <div class="input-group sm">#}
+        {#                                    {{ form.nombre }}#}
+        {#                                </div>#}
+        {#                                {% if form.nombre.errors %}#}
+        {#                                    {% for error in form.nombre.errors %}#}
+        {#                                        <span class="text-danger small">{{ error }}</span>#}
+        {#                                    {% endfor %}#}
+        {#                                {% endif %}#}
+        {#                            </div>#}
+        {##}
+        {#                            <div class="form-group">#}
+        {#                                {{ form.direccion.label }}#}
+        {#                                <div class=" input-group sm">#}
+        {#                                    {{ form.direccion }}#}
+        {#                                </div>#}
+        {#                                {% if form.direccion.errors %}#}
+        {#                                    {% for error in form.direccion.errors %}#}
+        {#                                        <span class="text-danger small">{{ error }}</span>#}
+        {#                                    {% endfor %}#}
+        {#                                {% endif %}#}
+        {#                            </div>#}
+        {##}
+        {#                            <div class="form-group">#}
+        {#                                {{ form.telefono.label }}#}
+        {#                                <div class="input-group sm">#}
+        {#                                    {{ form.telefono }}#}
+        {#                                </div>#}
+        {#                                {% if form.telefono.errors %}#}
+        {#                                    {% for error in form.telefono.errors %}#}
+        {#                                        <span class="text-danger small">{{ error }}</span>#}
+        {#                                    {% endfor %}#}
+        {#                                {% endif %}#}
+        {#                            </div>#}
+        {##}
+        {#                            <div class="form-group">#}
+        {#                                {{ form.observacion.label }}#}
+        {#                                <div class="input-group sm">#}
+        {#                                    {{ form.observacion }}#}
+        {#                                </div>#}
+        {#                                {% if form.telefono.errors %}#}
+        {#                                    {% for error in form.observacion.errors %}#}
+        {#                                        <span class="text-danger small">{{ error }}</span>#}
+        {#                                    {% endfor %}#}
+        {#                                {% endif %}#}
+        {#                            </div>#}
+        {##}
+        {#                            {{ form.guardar }}#}
+        {##}
+        {#                        </form>#}
+        {##}
+        {#                    </div>#}
+        {##}
+        {##}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
 
-                    <h3 class="card-title">
+    <div id="form_establecimiento" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card-header">
+                    <h3 class="modal-title">
                         <i class="fas fa-plus-circle"></i>
                         Agregar establecimiento
                     </h3>
                 </div>
-
-                <div class="card-body clearfix">
-
-                    <div class="card-body">
+                <div class="modal-body clearfix">
+                    <div class="modal-body">
                         {% from '_macro.html' import form_error %}
-                        <form action="enviar_form" method="GET" novalidate>
+                        <form action="" method="POST" novalidate>
                             {{ form.hidden_tag() }}
-
                             <div class="form-group">
                                 {{ form.nombre.label }}
                                 <div class="input-group sm">
@@ -110,14 +192,33 @@
                                     {% endfor %}
                                 {% endif %}
                             </div>
-
                             {{ form.guardar }}
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
                         </form>
 
                     </div>
 
 
+                </div>
+            </div>
+        </div>
+    </div>
+    {##}
+    <div id="modaleditestbl" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card-header">
+                    <h3 class="modal-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Agregar establecimiento
+                    </h3>
+                </div>
+                <div class="modal-body clearfix">
+                    <form id="form-establecimiento" method="POST" novalidate>
+                        <div id="content-modal"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -148,19 +249,118 @@
                         {"data": "direccion"},
                         {"data": "telefono"},
                         {"data": "observacion"},
+                        {'data': 'opciones'},
+                    ],
+
+                    columnDefs: [
+                        {
+                            targets: [-1],
+                            class: 'text-center',
+                            orderable: false,
+                            render: function (data, type, row) {
+                                var buttons = '<a href="/edit/' + row.id + '" class="btn btn-warning btn-xs btn-flat btn-edit" data-toggle="modal" data-target="#modaleditestbl"><i class="fas fa-edit "></i></a>';
+                                buttons += '<a class="btn btn-danger btn-xs btn-flat btn-delete"><i class="fas fa-trash"></i></a>';
+                                return buttons;
+                            }
+                        },
                     ],
 
                 }
             )
         }
 
-        get_tbl()
+        function enviarData(id_registro) {
+            url = "/estbldelete/" + id_registro
+           $.ajax({
+               url: url,
+               type: 'GET',
+               data: {
+                   id: id_registro,
+               },
+               success: function (data) {
+                   tbl.ajax.reload()
+               }
+           })
+        }
 
+        {#        function enviarData(id_registro) {#}
+        {#   $.ajax({#}
+        {#       url: window.location.pathname,#}
+        {#       type: 'GET',#}
+        {#       data: {#}
+        {#           id: id_registro,#}
+        {#       }#}
+        {#   }).done(function (data) {#}
+        {#       if (!data.hasOwnProperty('error')) {#}
+        {#           console.log('redirect', data.redirect)#}
+        {#           if (data.hasOwnProperty('redirect')) {#}
+        {#               location.href = data.redirect#}
+        {#           }#}
+        {#       }#}
+        {#       console.log("data", data)#}
+        {#   }).fail(function (error) {#}
+        {#       console.log("Error")#}
+        {#   })#}
+        {##}
+
+        get_tbl()
+        let addbutton = document.getElementById('buttonestbl')
+        addbutton.addEventListener('click', function () {
+            $("#form_establecimiento").modal("show")
+        })
+
+        let url;
+        $("#data_p tbody").on("click", ".btn-edit", function () {
+            var tr = tbl.cell($(this).closest('td, li')).index();
+            console.log(tr)
+            var data = tbl.row(tr.row).data();
+            url = "/edit/" + data.id
+            $.ajax({
+                url: url,
+                type: 'GET',
+            }).done(function (res) {
+                let content = document.getElementById("content-modal")
+                content.innerHTML = res
+            })
+            $("#modaleditestbl").modal("show")
+        })
+
+        $("#data_p tbody").on('click', '.btn-delete', function (e) {
+           e.preventDefault()
+            console.log("pruea")
+           var tr = tbl.cell($(this).closest('td, li')).index();
+           var data = tbl.row(tr.row).data();
+           let id = data.id
+           enviarData(id)
+        })
 
         {#let nombre = document.getElementById('nombre')#}
         {#nombre.addEventListener('keyup', function () {#}
         {#    nombre.style.borderColor = 'green'})#}
 
+        $("#form-establecimiento").on("submit", function (e) {
+            e.preventDefault()
+            var formData = new FormData($(this)[0])
+            $.ajax({
+                url: url,
+                type: "POST",
+                processData:false,
+                loadData:false,
+                contentType:false,
+                datatype: 'json',
+                data: formData,
+                success: function (data, textStatus, jqXHR) {
+                    {#console.log(data)#}
+                    alert("Actualizado exitosamente")
+                    tbl.ajax.reload(null, false);
+                    $('modaleditestbl').modal('hide');
+                },
+                error: function (data, textStatus, jqXHR){
+                    //process error msg
+                }
+            });
+
+        });
     </script>
 
 

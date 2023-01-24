@@ -84,10 +84,8 @@
         {#let btn_registro = document.getElementById('btnregistro'.id)#}
         let btnregistro = document.querySelectorAll(".btnregistro")
         {#btnregistro.forEach(element => console.log(element));#}
-
         btnregistro.forEach(function (registro) {
                 registro.addEventListener('click', function () {
-
                     id_registro = registro.id;
                     console.log(registro)
                     enviarData(id_registro)
@@ -95,7 +93,6 @@
 
             }
         );
-
         function enviarData(id_registro) {
             $.ajax({
                 url: window.location.pathname,
@@ -103,10 +100,8 @@
                 data: {
                     action: 'update',
                     id: id_registro
-
                 }
             }).done(function (data) {
-
                 if (!data.hasOwnProperty('error')) {
                     console.log('redirect', data.redirect)
                     if (data.hasOwnProperty('redirect')) {
@@ -114,7 +109,6 @@
                     }
                 }
                 console.log("data", data)
-
             }).fail(function (error) {
                 console.log("Error")
             })
