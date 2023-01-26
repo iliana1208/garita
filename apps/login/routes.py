@@ -12,8 +12,8 @@ from apps.login.forms import LoginForm
 
 @lg.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for("ingresos.listado"))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for("ingresos.listado"))
     method = request.method
     form = LoginForm()
     error = ""

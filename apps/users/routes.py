@@ -2,7 +2,6 @@ from flask import request, redirect, url_for, render_template, flash
 from flask_login import current_user
 import json
 from flask import Response
-from apps.users.models import User
 from apps.users import users
 from apps.users.forms import RegistrosForm
 from apps.users.models import User
@@ -10,13 +9,13 @@ from config.db import db
 
 @users.route('/registro', methods=['GET', 'POST'])
 def registro():
-    if current_user.is_authenticated:
-        return redirect(url_for("ingresos.listado"))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for("ingresos.listado"))
 
     method = request.method
     form = RegistrosForm()
-    lista = [(x.id, x.nombre) for x in User.query.all()]
-    form.change_choices_estbl(lista)
+    # lista = [(x.id, x.username) for x in User.query.all()]
+    # form.change_choices_estbl(lista)
     error = ""
     if method == 'GET':
         pass
