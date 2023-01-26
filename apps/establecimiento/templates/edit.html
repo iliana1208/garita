@@ -2,6 +2,7 @@
     {% from '_macro.html' import form_error %}
     <form id="form-establecimiento" method="POST" novalidate>
         {{ form.hidden_tag() }}
+
         <div class="form-group">
             {{ form.nombre.label }}
             <div class="input-group sm">
@@ -56,5 +57,5 @@
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
 
-
+       </form>
 </div>

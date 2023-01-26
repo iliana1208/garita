@@ -1,4 +1,4 @@
-from flask_login import LoginManager
+from flask_login import LoginManager, UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # from base.model_mixin.models import AbstractUser
@@ -20,6 +20,7 @@ class User(BaseModelMixin, db.Model):
     # ingresos_user_creation = db.relationship('Ingreso', backref='user_creation', foreign_keys=['User.id'])
     # ingresos_user_modified = db.relationship('Ingreso', backref='user_modified', foreign_keys=['User.id'])
     # rol = db.Column(db.Integer, db.ForeignKey('rol.codigo'))
+
     def __init__(self, is_active, rol, username, password, first_name, last_name, correo, establecimiento):
         self.is_active = is_active
         self.rol = rol
@@ -30,12 +31,13 @@ class User(BaseModelMixin, db.Model):
         self.correo = correo
         self.establecimiento_id = establecimiento
 
-    @staticmethod
-    def get_id(id):
-        return User.query.get(id)
 
-    @staticmethod
-    def get_by_id(id):
+    def get_id(self):
+        return str(self.id)
+        # return str(User.query.get(id).id)
+
+    @classmethod
+    def get_by_id(cls):
         return User.query.get(id)
 
     @classmethod

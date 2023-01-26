@@ -1,0 +1,321 @@
+{% extends 'body.html' %}
+{% block head %}
+    <!-- Datatables -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' ) }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/css/responsive.bootstrap4.min.css' ) }}">
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/js/jquery.dataTables.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/js/dataTables.bootstrap4.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/js/dataTables.responsive.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-1.10.20/plugins/responsive-2.2.3/js/responsive.bootstrap4.min.js' ) }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-list-alt"></i>
+                        Listar usuarios
+                    </h3>
+                </div>
+
+                <div class="jumbotron-fluid p-2">
+                    <h2>
+                        <button type="button" class="btn btn-success float-right" data-toggle="modal"
+                                data-target="#mymodal" id="buttonuser"> Agregar nuevo usuario
+                        </button>
+
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <table class="table" id="data_u">
+                        <thead>
+                        {% block columns %}
+                            <tr>
+                                <th scope="col" style="width: 15%;">Username</th>
+                                <th scope="col" style="width: 15%;">email</th>
+                                <th scope="col" style="width: 15%;">rol</th>
+                                <th scope="col" style="width: 15%;">Opciones</th>
+                            </tr>
+                        {% endblock %}
+                        </thead>
+                        {% block rows %}
+                            <tr>
+                        {% endblock %}
+
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="form_usuario" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card-header">
+                    <h3 class="modal-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Agregar usuario
+                    </h3>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="modal-body">
+                        {% from '_macro.html' import form_error %}
+                        <form action="" method="POST" novalidate>
+                            {{ form.hidden_tag() }}
+
+                    <div class="input-group mb-3">
+                        {{ form.first_name }}
+                        {#                    <input type="text" class="form-control" placeholder="Full name">#}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        {{ form.last_name }}
+                        {#                    <input type="text" class="form-control" placeholder="Full name">#}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        {{ form.username }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                        {{ form.email }}
+                        {#                    <input type="email" class="form-control" placeholder="Email">#}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                        {{ form.password }}
+                        {#                    <input type="password" class="form-control" placeholder="Retype password">#}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        {{ form.establecimiento }}
+                        {#                    <input type="password" class="form-control" placeholder="Retype password">#}
+                        {#                        <div class="input-group-append">#}
+                        {#                            <div class="input-group-text">#}
+                        {#                                <span class="fas fa-lock"></span>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                    </div>
+
+                    <div class="input-group mb-3">
+                        {{ form.rol }}
+                    </div>
+
+                    {#                <div class="row">#}
+                    {#                    <div class="col-8">#}
+                    {#                        <div class="icheck-primary">#}
+                    {#                            <input type="checkbox" id="agreeTerms" name="terms" value="agree">#}
+                    {#                            <label for="agreeTerms">#}
+                    {#                                I agree to the <a href="#">terms</a>#}
+                    {#                            </label>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    <div class="col-6">
+                        {{ form.register }}
+                        {#                        <button type="submit" class="btn btn-primary btn-block">Registrarse</button>#}
+                    </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {##}
+    <div id="modaledituser" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card-header">
+                    <h3 class="modal-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Agregar usuario
+                    </h3>
+                </div>
+                <div class="modal-body clearfix">
+                    <form id="form-usuario" method="POST" novalidate>
+                        <div id="content-modal"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let tbl;
+
+        function get_tbl() {
+            tbl = $('#data_u').DataTable({
+                    responsive: false,
+                    autoWidth: false,
+                    destroy: true,
+                    deferRender: true,
+                    scrollX: true,
+                    ajax: {
+                        url: window.location.pathname,
+                        type: 'POST',
+                        data: {
+                            'action': 'searchdata'
+                        },
+                        dataSrc: "",
+                        headers: {'X-CSRFToken': csrftoken}
+                    },
+                    columns: [
+                        {"data": "username"},
+                        {"data": "email"},
+                        {"data": "rol"},
+                        {'data': 'opciones'},
+                    ],
+
+                    columnDefs: [
+                        {
+                            targets: [-1],
+                            class: 'text-center',
+                            orderable: false,
+                            render: function (data, type, row) {
+                                var buttons = '<a href="/edit/' + row.id + '" class="btn btn-warning btn-xs btn-flat btn-edit" data-toggle="modal" data-target="#modaledituser"><i class="fas fa-edit "></i></a>';
+                                buttons += '<a class="btn btn-danger btn-xs btn-flat btn-delete"><i class="fas fa-trash"></i></a>';
+                                return buttons;
+                            }
+                        },
+                    ],
+
+                }
+            )
+        }
+
+        function enviarData(id_registro) {
+            url = "/userdelete/" + id_registro
+           $.ajax({
+               url: url,
+               type: 'GET',
+               data: {
+                   id: id_registro,
+               },
+               success: function (data) {
+                   tbl.ajax.reload()
+               }
+           })
+        }
+
+        {#        function enviarData(id_registro) {#}
+        {#   $.ajax({#}
+        {#       url: window.location.pathname,#}
+        {#       type: 'GET',#}
+        {#       data: {#}
+        {#           id: id_registro,#}
+        {#       }#}
+        {#   }).done(function (data) {#}
+        {#       if (!data.hasOwnProperty('error')) {#}
+        {#           console.log('redirect', data.redirect)#}
+        {#           if (data.hasOwnProperty('redirect')) {#}
+        {#               location.href = data.redirect#}
+        {#           }#}
+        {#       }#}
+        {#       console.log("data", data)#}
+        {#   }).fail(function (error) {#}
+        {#       console.log("Error")#}
+        {#   })#}
+        {##}
+
+        get_tbl()
+        let addbutton = document.getElementById('buttonuser')
+        addbutton.addEventListener('click', function () {
+            $("#form_usuario").modal("show")
+        })
+
+        let url;
+        $("#data_u tbody").on("click", ".btn-edit", function () {
+            var tr = tbl.cell($(this).closest('td, li')).index();
+            console.log(tr)
+            var data = tbl.row(tr.row).data();
+            url = "/edit/" + data.id
+            $.ajax({
+                url: url,
+                type: 'GET',
+            }).done(function (res) {
+                let content = document.getElementById("content-modal")
+                content.innerHTML = res
+            })
+            $("#modaledituser").modal("show")
+        })
+
+        $("#data_u tbody").on('click', '.btn-delete', function (e) {
+           e.preventDefault()
+            console.log("pruea")
+           var tr = tbl.cell($(this).closest('td, li')).index();
+           var data = tbl.row(tr.row).data();
+           let id = data.id
+           enviarData(id)
+        })
+
+        {#let nombre = document.getElementById('nombre')#}
+        {#nombre.addEventListener('keyup', function () {#}
+        {#    nombre.style.borderColor = 'green'})#}
+
+        $("#form-usuario").on("submit", function (e) {
+            e.preventDefault()
+            var formData = new FormData($(this)[0])
+            $.ajax({
+                url: url,
+                type: "POST",
+                processData:false,
+                loadData:false,
+                contentType:false,
+                datatype: 'json',
+                data: formData,
+                success: function (data, textStatus, jqXHR) {
+                    {#console.log(data)#}
+                    alert("Actualizado exitosamente")
+                    tbl.ajax.reload(null, false);
+                    $('modaledituser').modal('hide');
+                },
+                error: function (data, textStatus, jqXHR){
+                    //process error msg
+                }
+            });
+
+        });
+    </script>
+
+
+{% endblock %}

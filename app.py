@@ -1,7 +1,6 @@
 from apps.users.models import User
 from apps.ingresos.models import Ingreso
 from apps.establecimiento.models import Establecimiento
-
 from config.app import create_app
 from flask_login import LoginManager, current_user
 from flask_migrate import Migrate

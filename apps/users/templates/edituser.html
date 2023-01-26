@@ -1,34 +1,8 @@
-{% extends 'body.html' %}
-
-{% block body %}
+<div class="modal-body">
     {% from '_macro.html' import form_error %}
-
-    <body class="register-page" data-q-sc-loaded="true" style="min-height: 570.802px;">
-    <div class="register-box">
-
-        <div class="card">
-            {% block alerta_sistema %}
-                {% if get_flashed_messages() %}
-                    {% with messages = get_flashed_messages() %}
-                        <div class="alert alert-warning alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
-                            </button>
-                            <h5><i class="icon fas fa-info"></i> Alerta!</h5>
-                            {% for message in messages %}
-                                <li>{{ message }}</li>
-                            {% endfor %}
-                        </div>
-                    {% endwith %}
-                {% endif %}
-            {% endblock %}
-
-
-            <div class="card-body register-card-body">
-                <p class="login-box-msg">Registrar un nuevo usuario</p>
-
-                <form action="" method="POST" novalidate>
-                    {{ form.hidden_tag() }}
-                    <div class="input-group mb-3">
+    <form id="form-usuario" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+              <div class="input-group mb-3">
                         {{ form.first_name }}
                         {#                    <input type="text" class="form-control" placeholder="Full name">#}
                         <div class="input-group-append">
@@ -92,39 +66,17 @@
                         {{ form.rol }}
                     </div>
 
-                    {#                <div class="row">#}
-                    {#                    <div class="col-8">#}
-                    {#                        <div class="icheck-primary">#}
-                    {#                            <input type="checkbox" id="agreeTerms" name="terms" value="agree">#}
-                    {#                            <label for="agreeTerms">#}
-                    {#                                I agree to the <a href="#">terms</a>#}
-                    {#                            </label>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
                     <div class="col-6">
                         {{ form.register }}
                         {#                        <button type="submit" class="btn btn-primary btn-block">Registrarse</button>#}
                     </div>
-                </form>
-{#                <a href="{{ url_for('login.login') }}" class="text-center">Estoy registrado, iniciar sesion.</a>#}
-            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
-    </div>
-    </body>
 
-
-{% endblock %}
-
-{#{% block content %}#}
-{#{% from '_macro.html' import form_error %}#}
-{#<form action="" method="POST" novalidate>#}
-{#    {{ form.hidden_tag() }}#}
-{#    porque csrf token es oculto#}
-{#    {{ form_error(form.first_name) }}#}
-{#    {{ form_error(form.last_name) }}#}
-{#    {{ form_error(form.username) }}#}
-{#    {{ form_error(form.password) }}#}
-{#    {{ form_error(form.email) }}#}
-{#    {{ form.register }}#}
-{#</form>#}
-{#{% endblock %}#}
+       </form>
+</div>
