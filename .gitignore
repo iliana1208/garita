@@ -30,6 +30,7 @@ dist/
 downloads/
 eggs/
 .eggs/
+#Libreria de bootstrap
 #lib/
 lib64/
 parts/
