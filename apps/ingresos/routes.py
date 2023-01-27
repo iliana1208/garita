@@ -57,7 +57,7 @@ def listado():
                         #user_modified = current_user.username
                         list.append(
                             {'id': items.id, 'nombre': items.nombre, 'cedula': items.cedula, 'placa': items.placa,
-                             'fecha_ingreso': fecha_ingreso,'fecha_salida': fecha_salida, 'tiempo': tiempo, 'user_creation':items.user_creation, 'user_modified':user_modified})
+                             'fecha_ingreso': fecha_ingreso,'fecha_salida': fecha_salida, 'tiempo': tiempo})
 
             except Exception as e:
                 list['error'] = str(e)

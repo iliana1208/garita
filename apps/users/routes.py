@@ -14,8 +14,6 @@ def registro():
 
     method = request.method
     form = RegistrosForm()
-    # lista = [(x.id, x.username) for x in User.query.all()]
-    # form.change_choices_estbl(lista)
     error = ""
     if method == 'GET':
         pass
@@ -31,12 +29,13 @@ def registro():
                     list= []
                     for items in data:
                         list.append(
-                            {'id':items.id, 'username': items.username, 'email':items.email,
+                            {'id': items.id, 'username': items.username, 'correo': items.email,
                              'rol': items.rol, 'opciones':''}
                         )
                 except Exception as e:
                     list['error'] = str(e)
                 return Response(json.dumps(list))
+
 
             form = RegistrosForm()
             if form.validate_on_submit():
