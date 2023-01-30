@@ -13,7 +13,7 @@ def create_user():
     correo = click.prompt("correo")
     click.echo(correo)
     password = click.prompt("password")
-    user = User(username=username, password=password, is_active=True, rol=1, first_name='', last_name='',
+    user = User(username=username, password=password, is_active=True, rol=3, first_name='', last_name='',
                 correo=correo, establecimiento='')
     user.password = User.set_password(password)
     db.session.add(user)

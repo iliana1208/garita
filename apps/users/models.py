@@ -11,6 +11,7 @@ class User(BaseModelMixin, db.Model):
     # is_superuser = db.Column(db.Boolean, default=False)
     is_active = db.Column(db.Boolean, default=True)
     rol = db.Column(db.Integer, nullable= True)
+    #1 administrador, 2 gestor, 3 superuser
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
     first_name = db.Column(db.String(100), nullable=True)

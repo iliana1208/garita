@@ -36,8 +36,8 @@
                         {% block columns %}
                             <tr>
                                 <th scope="col" style="width: 15%;">Username</th>
-                                <th scope="col" style="width: 15%;">email</th>
                                 <th scope="col" style="width: 15%;">rol</th>
+                                <th scope="col" style="width: 15%;">email</th>
                                 <th scope="col" style="width: 15%;">Opciones</th>
                             </tr>
                         {% endblock %}
@@ -161,6 +161,7 @@
         </div>
     </div>
     {##}
+
     <div id="modaledituser" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -281,7 +282,7 @@
 
         $("#data_u tbody").on('click', '.btn-delete', function (e) {
            e.preventDefault()
-            console.log("pruea")
+            {#console.log("pruba")#}
            var tr = tbl.cell($(this).closest('td, li')).index();
            var data = tbl.row(tr.row).data();
            let id = data.id
@@ -304,7 +305,7 @@
                 datatype: 'json',
                 data: formData,
                 success: function (data, textStatus, jqXHR) {
-                    {#console.log(data)#}
+                    console.log(data)
                     alert("Actualizado exitosamente")
                     tbl.ajax.reload(null, false);
                     $('modaledituser').modal('hide');

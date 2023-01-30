@@ -10,6 +10,5 @@ class LoginForm(FlaskForm):
                                      render_kw={'placeholder': 'Ingrese su contraseña', 'class': 'form-control'})
     remember_me = wtforms.BooleanField(label='Recuérdame',
                                        render_kw={'class': 'icheck-primary'})
-
-    rol = wtforms.SelectField(choices=[(1,'Administrador'), (2,'Superuser'),(3,'Gestor')], render_kw={'class': 'btn btn-primary btn-block'})
+    rol = wtforms.SelectField(choices=[(1,'Administrador'), (2,'Gestor'),(3,'Superuser')], render_kw={'class': 'btn btn-primary btn-block'})
     guardar = wtforms.SubmitField('Iniciar sesión', render_kw={'class': 'btn btn-primary btn-block'})

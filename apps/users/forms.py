@@ -10,7 +10,7 @@ class RegistrosForm(FlaskForm):
 
     username = wtforms.StringField(label="Username", validators=[length(max=20, min=4), DataRequired()],
                                    render_kw={'placeholder': 'Ingrese su username', 'class': 'form-control'})
-    rol = wtforms.SelectField(choices=[(1, 'Administrador'), (2, 'Gestor'), (3, 'Superuser'),],
+    rol = wtforms.SelectField(choices=[(1, 'Administrador'), (2, 'Gestor'),],
                               render_kw={'class': 'btn btn-primary btn-block'})
     establecimiento = wtforms.SelectField(choices=[(0, "-----")], coerce=int,
                                           render_kw={'class': 'btn btn-primary btn-block'})
@@ -27,3 +27,4 @@ class RegistrosForm(FlaskForm):
 
     def change_choices_estbl(self, lista):
         self.establecimiento.choices = lista
+

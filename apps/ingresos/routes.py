@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from flask import render_template, request, redirect, url_for, flash
 from flask import Response
 import json
@@ -47,13 +46,14 @@ def listado():
             list = {}
             try:
                 car = Ingreso.query.all()
+                # if current_user.rol == 1:
+                #     lista = [Ingreso.query.filter_by(current_user.establecimiento)]
                 list = []
                 for items in car:
                     if items.tiempo != None:
                         fecha_ingreso = items.fecha_ingreso.strftime("%d-%m-%Y %H:%M:%S")
                         fecha_salida = items.fecha_salida.strftime("%d-%m-%Y %H:%M:%S")
                         tiempo = escala_time(items.tiempo)
-                        print(tiempo)
                         #user_modified = current_user.username
                         list.append(
                             {'id': items.id, 'nombre': items.nombre, 'cedula': items.cedula, 'placa': items.placa,

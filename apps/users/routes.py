@@ -2,6 +2,8 @@ from flask import request, redirect, url_for, render_template, flash
 from flask_login import current_user
 import json
 from flask import Response
+
+from apps.establecimiento.models import Establecimiento
 from apps.users import users
 from apps.users.forms import RegistrosForm
 from apps.users.models import User
@@ -10,15 +12,21 @@ from config.db import db
 @users.route('/registro', methods=['GET', 'POST'])
 def registro():
     # if current_user.is_authenticated:
-    #     return redirect(url_for("ingresos.listado"))
+        # return redirect(url_for("ingresos.listado"))
 
     method = request.method
     form = RegistrosForm()
+    lista = [(x.id, x.nombre) for x in Establecimiento.query.all()]
+    if current_user.rol == 1:
+        lista = [current_user.establecimiento]
+    form.change_choices_estbl(lista)
+
     error = ""
     if method == 'GET':
         pass
 
     if method == 'POST':
+        print('post')
         try:
             datos = request.form
             action = datos.get('action')
@@ -29,13 +37,12 @@ def registro():
                     list= []
                     for items in data:
                         list.append(
-                            {'id': items.id, 'username': items.username, 'correo': items.email,
+                            {'id': items.id, 'username': items.username, 'correo': items.correo,
                              'rol': items.rol, 'opciones':''}
                         )
                 except Exception as e:
                     list['error'] = str(e)
                 return Response(json.dumps(list))
-
 
             form = RegistrosForm()
             if form.validate_on_submit():
@@ -50,7 +57,6 @@ def registro():
                 user = User.query.filter_by(username=username).first()
                 if not user:
                     try:
-
                         user = User(username=username, password=password, first_name=first_name, last_name=last_name,
                                     is_active=is_active,
                                     rol=rol, establecimiento=establecimiento, correo=email)
@@ -69,7 +75,7 @@ def registro():
         except Exception as e:
             print("Error", str(e))
 
-    return render_template('registro.html', form=form, title='Registros de nuevos usuarios', error=error)
+    return render_template('registro.html', form=form)
 
 
 @users.route('/edituser/<int:id>', methods=['GET', 'POST'])

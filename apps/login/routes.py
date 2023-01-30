@@ -21,32 +21,25 @@ def login():
         if form.validate_on_submit():
             username = form.username.data
             password = form.password.data
+            rol = form.rol.data
             user = User.query.filter_by(username=username).first()
             if user:
                 next_page = request.args.get('next')
-                print('user existe')
                 if user.is_active:
-                    print('esta activo')
-                    if user.check_password(user.password, password):
-                        print('contrasena bien')
-                        print(user)
-
+                    if user.check_password(user.password, password) and user.rol == int(rol):
                         login_user(user=user, remember=form.remember_me)
-                        print('despues de logearse')
                         if not next_page or url_parse(next_page).netloc != '':
                             next_page = url_for("ingresos.listado")
                             return redirect(next_page)
                         else:
                             return redirect(next_page)
-
                     else:
-                        flash("Las clave es incorrecta", category='warning')
-
+                        flash("Credenciales incorrectas, intente nuevamente", category='warning')
                 else:
                     flash("El usuario está desactivado", category='warning')
 
             else:
-                flash("El usuario no existe", category='danger')
+                flash("Credenciales incorrectas, intente nuevamente", category='danger')
 
         else:
             print(form.errors)

@@ -6,18 +6,21 @@
         <span class="brand-text font-weight-light">Registro de visitas</span>
     </a>
     <div class="sidebar">
+
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-{#            <div class="image">#}
-{#                <img src= "{{ url_for('static', filename ='img/user.png' ) }}" class="img-circle elevation-2" alt="User Image">#}
-{#            </div>#}
+            <div class="image">
+                <i class="nav-icon fas fa-user"></i>
+{#                <img src="" class="img-circle elevation-2" alt="User Image">#}
+            </div>
             <div class="info">
-                <a href="#" class="d-block"> {{current_user}}</a>
+                <a href="#" class="d-block">{{current_user.username}}</a>
             </div>
         </div>
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-header">Opciones</li>
+                {% if current_user.rol==2 or  current_user.rol==1 or current_user.rol==3 %}
                 <li class="nav-item">
                     <a href="href={{ url_for('ingresos.listado') }}" class="nav-link">
                         <i class="nav-icon fas fa-list"></i>
@@ -26,6 +29,7 @@
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a href="{{ url_for('ingresos.ingresos') }}" class="nav-link">
                         <i class="nav-icon fas fa-door-open"></i>
@@ -42,6 +46,32 @@
                         </p>
                     </a>
                 </li>
+
+                {% if current_user.rol==1 or  current_user.rol==3 %}
+                    <li class="nav-item">
+                    <a href="{{ url_for('users.registro') }}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Usuarios
+                        </p>
+                    </a>
+                    </li>
+
+                {% if current_user.rol==3 %}
+                     <li class="nav-item">
+                    <a href="{{ url_for('establecimiento.principal') }}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Establecimientos
+                        </p>
+                    </a>
+                    </li>
+
+                         {% endif %}
+                     {% endif %}
+                {% endif %}
+
+
 
 
             </ul>
