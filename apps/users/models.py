@@ -18,11 +18,10 @@ class User(BaseModelMixin, db.Model):
     last_name = db.Column(db.String(100), nullable=True)
     correo = db.Column(db.String(200), nullable=True, default='sininfo@gmail.com')
     establecimiento_id = db.Column(db.Integer, db.ForeignKey('establecimiento.id'), nullable=True)
-    # ingresos_user_creation = db.relationship('Ingreso', backref='user_creation', foreign_keys=['User.id'])
-    # ingresos_user_modified = db.relationship('Ingreso', backref='user_modified', foreign_keys=['User.id'])
-    # rol = db.Column(db.Integer, db.ForeignKey('rol.codigo'))
+    user_create = db.Column(db.Integer, nullable= True, default = None)
+    user_modified = db.Column(db.Integer, nullable=True, default = None)
 
-    def __init__(self, is_active, rol, username, password, first_name, last_name, correo, establecimiento):
+    def __init__(self, is_active, rol, username, password, first_name, last_name, correo, establecimiento, user_create):
         self.is_active = is_active
         self.rol = rol
         self.username = username
@@ -31,6 +30,7 @@ class User(BaseModelMixin, db.Model):
         self.last_name = last_name
         self.correo = correo
         self.establecimiento_id = establecimiento
+        self.user_create = user_create
 
 
     def get_id(self):

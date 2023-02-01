@@ -12,6 +12,13 @@ class Ingreso(BaseModelMixin, RelationShipAudit, db.Model):
     cedula = db.Column(db.String(10), nullable = False)
     fecha_salida= db.Column(db.DateTime, nullable= True)
     tiempo = db.Column(db.Integer, nullable= True)
+    is_active = db.Column(db.Boolean, default=True)
+
+    def __init__(self, nombre, placa, cedula, is_active):
+        self.nombre = nombre
+        self.placa = placa
+        self.cedula = cedula
+        self.is_active = is_active
 
     # user_creation = db.Column(db.Integer, db.ForeignKey('user.id'), nullable= True)
     # user_modified = db.Column(db.Integer, db.ForeignKey('user.id'), nullable= True)

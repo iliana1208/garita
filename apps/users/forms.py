@@ -7,7 +7,6 @@ class RegistrosForm(FlaskForm):
                                      render_kw={'placeholder': 'Ingrese sus nombres', 'class': 'form-control'})
     last_name = wtforms.StringField(label="Apellidos", validators=[length(max=100, min=1), DataRequired()],
                                     render_kw={'placeholder': 'Ingrese sus apellidos', 'class': 'form-control'})
-
     username = wtforms.StringField(label="Username", validators=[length(max=20, min=4), DataRequired()],
                                    render_kw={'placeholder': 'Ingrese su username', 'class': 'form-control'})
     rol = wtforms.SelectField(choices=[(1, 'Administrador'), (2, 'Gestor'),],

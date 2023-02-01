@@ -47,7 +47,7 @@ def listado():
             try:
                 car = Ingreso.query.all()
                 # if current_user.rol == 1:
-                #     lista = [Ingreso.query.filter_by(current_user.establecimiento)]
+                #     car = [Ingreso.query.filter_by(current_user.establecimiento)]
                 list = []
                 for items in car:
                     if items.tiempo != None:
@@ -74,7 +74,7 @@ def ingresos():
             placa = request.form.get("placa")
             cedula = request.form.get("cedula")
             try:
-                car = Ingreso(nombre=nombre, placa=placa, cedula=cedula)
+                car = Ingreso(nombre=nombre, placa=placa, cedula=cedula, is_active=True)
                 db.session.add(car)
                 db.session.commit()
             except Exception as e:
@@ -124,7 +124,6 @@ def salidas():
             list = {}
             try:
                 car = Ingreso.query.all()
-
                 list = []
                 for items in car:
                     if items.tiempo == None:

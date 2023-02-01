@@ -41,11 +41,11 @@ def principal():
             telefono = request.form.get("telefono")
             observacion = request.form.get("observacion")
             try:
-                elemento = Establecimiento(nombre=nombre, direccion=direccion, telefono=telefono,
-                                           observacion=observacion)
+                elemento = Establecimiento(nombre=nombre, direccion=direccion, telefono=telefono, foto='',
+                                           observacion=observacion, is_active=True,user_create=current_user.id)
                 db.session.add(elemento)
                 db.session.commit()
-                print('guardado')
+
                 return redirect(url_for('establecimiento.principal'))
             except Exception as e:
                 print('Error', str(e))
@@ -76,6 +76,7 @@ def editar(id):
             estblold.direccion = direccion
             estblold.telefono = direccion
             estblold.observacion = observacion
+            estblold.user_modified = current_user.id
             db.session.commit()
 
         #print("formulario", form.data)
@@ -89,7 +90,7 @@ def estbldelete(id):
     form = EstablecimientoForm(obj=estble)
     if method == 'GET':
         estbl = Establecimiento.query.filter_by(id=id).first()
-        estbl.observacion = 'false'
+        estbl.is_active = False
         db.session.commit()
         response={'status':200}
         # return redirect(url_for('establecimiento.principal'))

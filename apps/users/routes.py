@@ -16,17 +16,18 @@ def registro():
 
     method = request.method
     form = RegistrosForm()
-    lista = [(x.id, x.nombre) for x in Establecimiento.query.all()]
-    if current_user.rol == 1:
-        lista = [current_user.establecimiento]
+    lista = [(int(x.id), x.nombre) for x in Establecimiento.query.all()]
+
+    # print(current_user.establecimiento.id)
+    # if current_user.rol == 1:
+    #     lista = [(current_user.establecimiento_id,current_user.establecimiento_id.nombre)]
     form.change_choices_estbl(lista)
 
     error = ""
     if method == 'GET':
         pass
 
-    if method == 'POST':
-        print('post')
+    elif method == 'POST':
         try:
             datos = request.form
             action = datos.get('action')
@@ -44,24 +45,28 @@ def registro():
                     list['error'] = str(e)
                 return Response(json.dumps(list))
 
-            form = RegistrosForm()
+            # form = RegistrosForm()
+            # lista = [(int(x.id), x.nombre) for x in Establecimiento.query.all()]
+            # form.change_choices_estbl(lista)
+
             if form.validate_on_submit():
                 username = request.form.get('username')
-                password = request.form.get('password')
+                password = request.form.get("password")
                 first_name = request.form.get('first_name')
                 last_name = request.form.get('last_name')
                 email = request.form.get('email')
                 is_active = True
                 establecimiento = request.form.get('establecimiento')
                 rol = request.form.get('rol')
+                user_create = current_user.id
                 user = User.query.filter_by(username=username).first()
                 if not user:
                     try:
                         user = User(username=username, password=password, first_name=first_name, last_name=last_name,
                                     is_active=is_active,
-                                    rol=rol, establecimiento=establecimiento, correo=email)
-
+                                    rol=rol, establecimiento=establecimiento, correo=email, user_create=user_create)
                         user.password = User.set_password(password)
+                        print(user)
                         db.session.add(user)
                         db.session.commit()
                         return redirect(url_for('establecimiento.principal'))
@@ -96,7 +101,6 @@ def edituser(id):
             email = request.form.get('email')
             establecimiento = request.form.get('establecimiento')
             rol = request.form.get('rol')
-
             userold.username = username
             userold.password = password
             userold.first_name = first_name
@@ -104,6 +108,7 @@ def edituser(id):
             userold.email = email
             userold.establecimiento = establecimiento
             userold.rol = rol
+            userold.user_modified = current_user.id
             db.session.commit()
 
         #print("formulario", form.data)
