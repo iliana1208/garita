@@ -14,7 +14,7 @@ def create_user():
     click.echo(correo)
     password = click.prompt("password")
     user = User(username=username, password=password, is_active=True, rol=3, first_name='', last_name='',
-                correo=correo, establecimiento='', user_create='', user_modified='')
+                correo=correo, establecimiento='', user_create='')
 
     user.password = User.set_password(password)
     db.session.add(user)
